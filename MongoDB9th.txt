@@ -1,0 +1,33 @@
+use catalogDB
+
+db.products.insertMany([
+{
+name: "Wireless Mouse",
+category: "Electronics",
+description: "Ergonomic wireless mouse with long battery life"
+},
+{
+name: "Gaming Keyboard",
+category: "Electronics",
+description: "Mechanical keyboard with RGB lighting"
+},
+{
+name: "Bluetooth Speaker",
+category: "Audio",
+description: "Compact speaker with rich bass and Bluetooth connectivity"
+},
+{
+name: "Cheap Headphones",
+category: "Audio",
+description: "Affordable headphones with decent sound quality"
+}
+])
+
+// Create text index
+db.products.createIndex({ description: "text" })
+
+// Search for word
+db.products.find({ $text: { $search: "wireless" } }).pretty()
+
+// Exclude documents with certain words
+db.products.find({ $text: { $search: "-cheap" } }).pretty()
